@@ -15,7 +15,7 @@ When completing store listing metadata, copy and paste the corresponding endpoin
 | **Privacy Policy URL** | Google Play Console & App Store Connect | `https://venhdev.github.io/memozen-policy/` |
 | **Data Deletion Request URL** | Google Play Console (Data Safety Form) | `https://venhdev.github.io/memozen-policy/#data-deletion` |
 | **Terms of Service (EULA)** | App Store Connect & Google Play Console | `https://venhdev.github.io/memozen-policy/#terms` |
-| **Support Contact** | Store Listing & In-App Drawer | `support@memozen.io` |
+| **Support Contact** | Store Listing & In-App Drawer | `support@memozen.app` |
 
 ---
 
