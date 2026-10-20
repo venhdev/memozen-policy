@@ -198,28 +198,75 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-size: 0.85rem;
             border: 1px solid #E5E7EB;
+            display: inline-block;
+            margin: 2px 0;
+            word-break: break-all;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 24px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
             font-size: 0.92rem;
-            overflow-x: auto;
-            display: block;
+            table-layout: auto;
         }
 
         th, td {
             border: 1px solid var(--border);
-            padding: 12px 14px;
+            padding: 14px 16px;
             text-align: left;
             vertical-align: top;
+            line-height: 1.65;
         }
 
         th {
             background-color: #F9FAFB;
             color: #111827;
             font-weight: 600;
+        }
+
+        .scope-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .scope-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .scope-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .scope-tag.android {
+            background: #E8F5E9;
+            color: #166534;
+            border: 1px solid #BBF7D0;
+        }
+
+        .scope-tag.ios {
+            background: #F3F4F6;
+            color: #374151;
+            border: 1px solid #E5E7EB;
         }
 
         .btn-action {
@@ -354,81 +401,101 @@
             <p>MemoZen chỉ yêu cầu cấp quyền thiết bị khi có thao tác chủ động của bạn. Dưới đây là bảng đối chiếu chi tiết giữa hai hệ điều hành Android và iOS:</p>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th><span lang="en">Capability / Scope</span><span lang="vi">Quyền hạn / Chức năng</span></th>
-                    <th>Android Scope</th>
-                    <th>iOS Info.plist Scope</th>
-                    <th><span lang="en">Strict Concrete Purpose</span><span lang="vi">Mục đích sử dụng thực tế</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Exact Alarm & Timers</strong><br><em>Báo thức chính xác</em></td>
-                    <td><span class="badge">SCHEDULE_EXACT_ALARM</span></td>
-                    <td>Time-Sensitive Notifications</td>
-                    <td>
-                        <span lang="en">Required strictly to fire user-scheduled end-of-day reflection alarms and focus session countdown timers (Zen Focus) at the exact minute configured by the user. Not used for background polling or stealth execution.</span>
-                        <span lang="vi">Cần thiết để kích hoạt báo nhắc viết nhật ký cuối ngày và đếm ngược phiên tập trung (Zen Focus) đúng chính xác thời khắc người dùng đã hẹn. Không dùng để chạy ngầm lén lút.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Camera</strong><br><em>Máy ảnh</em></td>
-                    <td><span class="badge">CAMERA</span></td>
-                    <td><span class="badge">NSCameraUsageDescription</span></td>
-                    <td>
-                        <span lang="en">To capture visual moments, photos, and short clips attached directly to personal diary entries and collaborative journey timelines.</span>
-                        <span lang="vi">Chụp ảnh kỷ niệm và quay video ngắn đính kèm trực tiếp vào nhật ký cá nhân hoặc album hành trình nhóm.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Microphone</strong><br><em>Ghi âm</em></td>
-                    <td><span class="badge">RECORD_AUDIO</span></td>
-                    <td><span class="badge">NSMicrophoneUsageDescription</span></td>
-                    <td>
-                        <span lang="en">To record intentional mindful voice notes and audio memos only when you explicitly tap the record button.</span>
-                        <span lang="vi">Ghi âm các đoạn voice note tâm trạng khi bạn chủ động nhấn nút ghi âm.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Location (Foreground Only)</strong><br><em>Định vị (Chỉ khi mở app)</em></td>
-                    <td><span class="badge">ACCESS_FINE_LOCATION</span><br><span class="badge">ACCESS_COARSE_LOCATION</span></td>
-                    <td><span class="badge">NSLocationWhenInUseUsageDescription</span></td>
-                    <td>
-                        <span lang="en">To attach place tags or travel check-ins to memos and journey maps. Location is accessed <strong>strictly while the app is actively in use</strong>. Background location tracking is disabled by architecture.</span>
-                        <span lang="vi">Gắn địa điểm hoặc vị trí check-in vào nhật ký chuyến đi trên bản đồ. Vị trí <strong>chỉ được truy cập khi ứng dụng đang mở</strong>. Ứng dụng không kích hoạt định vị chạy ngầm.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Photos & Library Access</strong><br><em>Thư viện ảnh & Bộ nhớ</em></td>
-                    <td><span class="badge">READ_MEDIA_IMAGES</span><br><span class="badge">WRITE_EXTERNAL_STORAGE</span> (API &le;28)</td>
-                    <td><span class="badge">NSPhotoLibraryUsageDescription</span><br><span class="badge">NSPhotoLibraryAddUsageDescription</span></td>
-                    <td>
-                        <span lang="en">To choose existing photos/videos from your gallery to insert into memories, and to export photobooks or PDF journals into your device gallery.</span>
-                        <span lang="vi">Chọn ảnh/video có sẵn trong máy để đính kèm vào nhật ký, hoặc lưu ảnh/sách ảnh PDF đã xuất vào bộ sưu tập của bạn.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Notifications</strong><br><em>Thông báo</em></td>
-                    <td><span class="badge">POST_NOTIFICATIONS</span></td>
-                    <td>Push Notification Entitlement</td>
-                    <td>
-                        <span lang="en">To deliver reflection reminders, completed focus session alerts, and collaborative journey updates triggered by members.</span>
-                        <span lang="vi">Gửi nhắc nhở viết nhật ký, chuông báo hoàn thành phiên tập trung, hoặc thông báo khi thành viên cập nhật hành trình nhóm.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Biometrics & Local Lock</strong><br><em>Sinh trắc học</em></td>
-                    <td><span class="badge">USE_BIOMETRIC</span><br><span class="badge">USE_FINGERPRINT</span></td>
-                    <td><span class="badge">NSFaceIDUsageDescription</span></td>
-                    <td>
-                        <span lang="en">Optional local app lock (Face ID / Fingerprint) guarding your private sanctuary. Biometric authentication is performed locally; raw biometric data never leaves your device KeyStore/Keychain.</span>
-                        <span lang="vi">Khóa ứng dụng bảo mật bằng Face ID hoặc vân tay. Quá trình xác thực diễn ra cục bộ trong chip bảo mật của máy; dữ liệu sinh trắc học không bao giờ rời khỏi máy bạn.</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <colgroup>
+                    <col style="width: 22%; min-width: 140px;">
+                    <col style="width: 28%; min-width: 190px;">
+                    <col style="width: 50%; min-width: 280px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th><span lang="en">Capability / Feature</span><span lang="vi">Quyền hạn / Chức năng</span></th>
+                        <th><span lang="en">Platform Scopes (Android & iOS)</span><span lang="vi">Mã quyền (Android & iOS)</span></th>
+                        <th><span lang="en">Strict Concrete Purpose & Usage</span><span lang="vi">Mục đích sử dụng thực tế</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Exact Alarm & Timers</strong><br><em>Báo thức chính xác</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">SCHEDULE_EXACT_ALARM</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">Time-Sensitive Alerts</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">Required strictly to fire user-scheduled end-of-day reflection alarms and focus session countdown timers (Zen Focus) at the exact minute configured by the user. Not used for background polling or stealth execution.</span>
+                            <span lang="vi">Cần thiết để kích hoạt báo nhắc viết nhật ký cuối ngày và đếm ngược phiên tập trung (Zen Focus) đúng chính xác thời khắc người dùng đã hẹn. Không dùng để chạy ngầm lén lút.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Camera</strong><br><em>Máy ảnh</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">CAMERA</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">NSCameraUsageDescription</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">To capture visual moments, photos, and short clips attached directly to personal diary entries and collaborative journey timelines.</span>
+                            <span lang="vi">Chụp ảnh kỷ niệm và quay video ngắn đính kèm trực tiếp vào nhật ký cá nhân hoặc album hành trình nhóm.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Microphone</strong><br><em>Ghi âm</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">RECORD_AUDIO</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">NSMicrophoneUsageDescription</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">To record intentional mindful voice notes and audio memos only when you explicitly tap the record button.</span>
+                            <span lang="vi">Ghi âm các đoạn voice note tâm trạng khi bạn chủ động nhấn nút ghi âm.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location (Foreground Only)</strong><br><em>Định vị (Chỉ khi mở app)</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">ACCESS_FINE_LOCATION</span> <span class="badge">ACCESS_COARSE_LOCATION</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">NSLocationWhenInUseUsageDescription</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">To attach place tags or travel check-ins to memos and journey maps. Location is accessed <strong>strictly while the app is actively in use</strong>. Background location tracking is disabled by architecture.</span>
+                            <span lang="vi">Gắn địa điểm hoặc vị trí check-in vào nhật ký chuyến đi trên bản đồ. Vị trí <strong>chỉ được truy cập khi ứng dụng đang mở</strong>. Ứng dụng không kích hoạt định vị chạy ngầm.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Photos & Library Access</strong><br><em>Thư viện ảnh & Bộ nhớ</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">READ_MEDIA_IMAGES</span> <span class="badge">WRITE_EXTERNAL_STORAGE</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">NSPhotoLibraryUsageDescription</span> <span class="badge">NSPhotoLibraryAddUsageDescription</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">To choose existing photos/videos from your gallery to insert into memories, and to export photobooks or PDF journals into your device gallery.</span>
+                            <span lang="vi">Chọn ảnh/video có sẵn trong máy để đính kèm vào nhật ký, hoặc lưu ảnh/sách ảnh PDF đã xuất vào bộ sưu tập của bạn.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Notifications</strong><br><em>Thông báo</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">POST_NOTIFICATIONS</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">Push Notification Entitlement</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">To deliver reflection reminders, completed focus session alerts, and collaborative journey updates triggered by members.</span>
+                            <span lang="vi">Gửi nhắc nhở viết nhật ký, chuông báo hoàn thành phiên tập trung, hoặc thông báo khi thành viên cập nhật hành trình nhóm.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Biometrics & Local Lock</strong><br><em>Sinh trắc học</em></td>
+                        <td>
+                            <div class="scope-row"><span class="scope-tag android">Android</span> <span class="badge">USE_BIOMETRIC</span> <span class="badge">USE_FINGERPRINT</span></div>
+                            <div class="scope-row"><span class="scope-tag ios">iOS</span> <span class="badge">NSFaceIDUsageDescription</span></div>
+                        </td>
+                        <td>
+                            <span lang="en">Optional local app lock (Face ID / Fingerprint) guarding your private sanctuary. Biometric authentication is performed locally; raw biometric data never leaves your device KeyStore/Keychain.</span>
+                            <span lang="vi">Khóa ứng dụng bảo mật bằng Face ID hoặc vân tay. Quá trình xác thực diễn ra cục bộ trong chip bảo mật của máy; dữ liệu sinh trắc học không bao giờ rời khỏi máy bạn.</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div lang="en">
             <h2>3. Categories of Data Collected (Data Safety Alignment)</h2>
